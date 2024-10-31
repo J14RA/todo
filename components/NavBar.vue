@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '~/stores/auth';
+import { useAuthStore } from "~/stores/auth";
 
 const authStore = useAuthStore();
 
@@ -29,4 +29,57 @@ const handleLogout = async () => {
 };
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="scss" scoped>
+.header {
+    background-color: #3498db;
+    padding: 20px;
+    text-align: center;
+
+    .header-title {
+        color: #fff;
+        font-size: 2rem;
+        margin: 0;
+    }
+}
+
+button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #c0392b;
+    }
+
+    &:disabled {
+        background-color: #95a5a6;
+        cursor: not-allowed;
+    }
+}
+
+.user--cta {
+    color: #3498db;
+    text-decoration: none;
+    margin-right: 10px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.logout,
+.user {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+</style>

@@ -5,25 +5,30 @@ const GUEST_ONLY_ROUTES = ["/login", "/signup"];
 
 export default defineNuxtPlugin(() => {
   const authStore = useAuthStore();
-  const router = useRoute();
+  const router = useRouter();
 
+  // setup the auth listener
   authStore.setupAuthListener();
 
-  const redirecUser = () => {
-    const { path } = router.currentRouter.value;
+  const redirectUser = () => {
+    const { path } = router.currentRoute.value;
 
+    // redirect authenticated users to homepage
     if (authStore.user) {
       if (GUEST_ONLY_ROUTES.includes(path)) {
         router.push("/");
       }
     }
 
-    if (authStore.user) {
+    // redirect unauthentiacted users to login
+    if (!authStore.user) {
       if (PROTECTED_ROUTES.includes(path)) {
         router.push("/login");
       }
     }
   };
+
+  // watch user and redirect when it changes
   watch(
     () => authStore.user,
     () => redirectUser()

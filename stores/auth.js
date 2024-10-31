@@ -1,59 +1,71 @@
 import { defineStore } from "pinia";
-import { useNuxtApp } from "#app";
+import { useTodoStore } from "@/stores/todos";
+import {
+  createUserWithEmailAndPassword,
+  signOut,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
     loginError: null,
     signupError: null,
-    initialAuthValuerReady: false,
+    initialAuthValueReady: false,
   }),
+
   actions: {
     setupAuthListener() {
-      if (process.client) {
-        const { $auth } = useNuxtApp();
-        if ($auth) {
-          onAuthStateChanged($auth, (user) => {
-            this.user = user || null;
-            console.log("user state change:", this.user);
-            this.initialAuthValueReady = true;
-          });
-        } else {
-          console.error("Firebase Auth is not initialized");
-        }
+      const { $auth } = useNuxtApp();
+
+      if ($auth) {
+        onAuthStateChanged($auth, (user) => {
+          this.user = user || null;
+          console.log("user state change:", this.user);
+          this.initialAuthValueReady = true;
+        });
+      } else {
+        console.error("Firebase Auth is not initialized");
       }
     },
+
+    // signup
     async signup(email, password) {
-      if (process.client) {
-        const { $auth } = useNuxtApp();
-        this.signupError = null;
+      const { $auth } = useNuxtApp();
 
-        try {
-          await createUserWithEmailAndPassword($auth, email, password);
-        } catch (error) {
-          this.signupError = error.message;
-        }
+      this.signupError = null;
+
+      try {
+        const cred = await createUserWithEmailAndPassword(
+          $auth,
+          email,
+          password
+        );
+      } catch (error) {
+        this.signupError = error.message;
       }
     },
+
+    // logout
     async logout() {
-      if (process.client) {
-        const { $auth } = useNuxtApp();
-        const todoStore = useTodoStore();
+      const { $auth } = useNuxtApp();
+      const todoStore = useTodoStore();
 
-        await signOut($auth);
-        todoStore.resetHabits();
-      }
+      await signOut($auth);
+      todoStore.resetTodos();
     },
-    async login(email, password) {
-      if (process.client) {
-        const { $auth } = useNuxtApp();
-        this.loginError = null;
 
-        try {
-          await signInWithEmailAndPassword($auth, email, password);
-        } catch (error) {
-          this.loginError = error.message;
-        }
+    // login
+    async login(email, password) {
+      const { $auth } = useNuxtApp();
+
+      this.loginError = null;
+
+      try {
+        const cred = await signInWithEmailAndPassword($auth, email, password);
+      } catch (error) {
+        this.loginError = error.message;
       }
     },
   },

@@ -1,0 +1,14 @@
+// assets/styles/_mixins.scss
+
+// Media Query Mixins
+@mixin respond-to-tablet {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin respond-to-desktop {
+    @media (min-width: 1024px) {
+        @content;
+    }
+}
