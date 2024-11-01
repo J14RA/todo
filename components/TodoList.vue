@@ -1,8 +1,8 @@
 <template>
     <div>
-        <ul class="todo-list_items">
-            <li v-for="todo in todos" :key="todo.id" class="todo-list_item">
-                <div class="todo-list_card">
+        <ul class="todo-list__items">
+            <li v-for="todo in todos" :key="todo.id" class="todo-list__item">
+                <div class="todo-list__card">
                     <input type="checkbox" @change="toggleCompletion(todo)"
                         :checked="todo.completions.includes(today)" />
                     <p>
@@ -10,7 +10,7 @@
                             {{ todo.name }}
                         </span>
                     </p>
-                    <button class="todo-list_card--cta" @click="deleteTodo(todo.id)">
+                    <button class="todo-list__cta" @click="deleteTodo(todo.id)">
                         Delete
                     </button>
                 </div>
@@ -46,16 +46,18 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.todo-list_items {
+@import "@/assets/variables";
+
+.todo-list__items {
     list-style-type: none;
     padding: 0;
 }
 
-.todo-list_item {
+.todo-list__item {
     margin-bottom: 10px;
 }
 
-.todo-list_card {
+.todo-list__card {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -68,16 +70,16 @@ onMounted(async () => {
     text-decoration: line-through;
 }
 
-.todo-list_card--cta {
+.todo-list__cta {
     background-color: #e74c3c;
     color: #fff;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
 
-.todo-list_card--cta:hover {
-    background-color: #c0392b;
+    &:hover {
+        background-color: #c0392b;
+    }
 }
 </style>

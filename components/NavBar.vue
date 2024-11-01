@@ -1,85 +1,72 @@
 <template>
     <header class="header">
-        <NuxtLink to="/">
-            <h1 class="header-title">To-Do List</h1>
-        </NuxtLink>
+        <div class="header__left">
+            <NuxtLink to="/">
+                <h1 class="header__title">To-Do List</h1>
+            </NuxtLink>
+        </div>
+        <div class="header__right">
+            <HideFromGuest>
+                <div class="header__logout">
+                    <button @click="handleLogout" class="header__logout-cta button">Logout</button>
+                </div>
+            </HideFromGuest>
+            <HideFromUser>
+                <div class="header__user">
+                    <NuxtLink to="/login" class="header__user-cta">Login</NuxtLink>
+                    <NuxtLink to="/signup" class="header__user-cta">Sign Up</NuxtLink>
+                </div>
+            </HideFromUser>
+        </div>
     </header>
-    <div>
-        <HideFromGuest>
-            <div class="logout">
-                <button @click="handleLogout" class="logout--cta">Logout</button>
-            </div>
-        </HideFromGuest>
-        <HideFromUser>
-            <div class="user">
-                <NuxtLink to="/login" class="user--cta">Login</NuxtLink>
-                <NuxtLink to="/signup" class="user--cta">Sign Up</NuxtLink>
-            </div>
-        </HideFromUser>
-    </div>
 </template>
 
 <script setup>
 import { useAuthStore } from "~/stores/auth";
-
 const authStore = useAuthStore();
-
 const handleLogout = async () => {
     await authStore.logout();
 };
 </script>
 
 <style lang="scss" scoped>
-.header {
-    background-color: #3498db;
-    padding: 20px;
-    text-align: center;
+@import "@/assets/variables";
 
-    .header-title {
-        color: #fff;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $primary-color;
+    padding: 20px;
+
+    &__title {
+        color: $text-color;
         font-size: 2rem;
         margin: 0;
     }
-}
 
-button {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: #c0392b;
+    &__left,
+    &__right {
+        display: flex;
+        align-items: center;
     }
 
-    &:disabled {
-        background-color: #95a5a6;
-        cursor: not-allowed;
+    &__user,
+    &__logout {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 0; // Remove margin-top to align with the title
     }
-}
 
-.user--cta {
-    color: #3498db;
-    text-decoration: none;
-    margin-right: 10px;
+    &__user-cta,
+    &__logout-cta {
+        color: $text-color;
+        text-decoration: none;
+        margin-right: 10px;
 
-    &:hover {
-        text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
+        }
     }
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.logout,
-.user {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
 }
 </style>

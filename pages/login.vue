@@ -13,6 +13,9 @@
                     <p v-if="authStore.loginError" class="error-text">
                         {{ authStore.loginError }}
                     </p>
+                    <p class="signup-text">
+                        Don't have an account? <NuxtLink to="/signup" class="signup-link">Sign Up</NuxtLink>
+                    </p>
                 </form>
             </div>
         </div>
@@ -37,50 +40,69 @@ definePageMeta({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/variables";
+
 .login {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
 
-.login-form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    &-title {
+        color: $primary-color;
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-.login-title {
-    margin-bottom: 20px;
-    text-align: center;
-}
+    &-form {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-.login-form_input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    &-form_input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-.login-form_input--cta {
-    width: 100%;
-    padding: 10px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    &-form_input--cta {
+        width: 100%;
+        padding: 10px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
 
-.login-form_input--cta:hover {
-    background-color: #2980b9;
+        :hover {
+            background-color: #2980b9;
+        }
+    }
+
 }
 
 .error-text {
     color: #e74c3c;
     text-align: center;
+}
+
+.signup-text {
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.signup-link {
+    color: #3498db;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 </style>

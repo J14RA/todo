@@ -1,14 +1,23 @@
-// assets/styles/_mixins.scss
+// assets/scss/_mixins.scss
 
-// Media Query Mixins
-@mixin respond-to-tablet {
-    @media (max-width: 768px) {
-        @content;
+// Media Query Mixin
+@mixin respond-to($breakpoint) {
+    @if $breakpoint ==tablet {
+        @media (max-width: 768px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==desktop {
+        @media (max-width: 992px) {
+            @content;
+        }
     }
 }
 
-@mixin respond-to-desktop {
-    @media (min-width: 1024px) {
-        @content;
-    }
+// Flex Centering
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

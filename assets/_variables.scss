@@ -1,10 +1,20 @@
-// assets/styles/_variables.scss
+// assets/scss/_variables.scss
+// Colors
+$primary-color: #004878;
+$secondary-color: #5A7FDB;
+$text-color: #fff;
 
-// Color Variables
-$primary-color: #007bff;
-$secondary-color: #6c757d;
-$text-color: #333;
-
-// Font and Spacing
+// Typography
+$font-family-base: 'Helvetica, Arial, sans-serif';
 $font-size-base: 1rem;
-$spacing-base: 1rem;
+$font-size-large: 1.25rem;
+
+// Spacing
+$spacing-small: 8px;
+$spacing-medium: 16px;
+$spacing-large: 24px;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;

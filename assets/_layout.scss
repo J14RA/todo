@@ -1,0 +1,18 @@
+// assets/scss/_layout.scss
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-medium;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -$spacing-small;
+}
+
+.col {
+    flex: 1;
+    padding: $spacing-small;
+}

@@ -1,7 +1,8 @@
 <template>
     <form @submit.prevent="handleSubmit" class="add-todo">
-        <input v-model="name" type="text" placeholder="Enter a new to do list..." class="add-todo_form" />
-        <button type="submit" class="add-todo--cta">Add to List</button>
+        <h2 class="add-todo__title">What are you thinking?</h2>
+        <input v-model="name" type="text" placeholder="Enter a new to-do item..." class="add-todo__input" />
+        <button type="submit" class="add-todo__cta">Add to List</button>
     </form>
 </template>
 
@@ -21,32 +22,41 @@ const handleSubmit = async () => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/variables";
+
 .add-todo {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-}
 
-.add-todo_form {
-    width: 70%;
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    &__title {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        text-align: center;
+    }
 
-.add-todo--cta {
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    &__input {
+        width: 70%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-.add-todo--cta:hover {
-    background-color: #2980b9;
+    &__cta {
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #2980b9;
+        }
+    }
 }
 </style>
