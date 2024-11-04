@@ -1,7 +1,3 @@
-Got it! Let's tailor the README specifically for your to-do list website project. Here's an enhanced version:
-
----
-
 # To-Do List Website
 
 Welcome to the To-Do List Website project! This repository contains a simple and efficient to-do list application built with Nuxt, Pinia, and Firebase.
