@@ -64,7 +64,9 @@ definePageMeta({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/variables";
+@use "sass:color";
+@use "assets/mixins" as *;
+@use "assets/variables" as *;
 
 .signup {
     display: flex;

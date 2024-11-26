@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <client-only>
     <NavBar />
     <NuxtPage />
-  </div>
+  </client-only>
 </template>
 
 <script setup>

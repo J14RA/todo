@@ -1,4 +1,7 @@
 // assets/scss/_utilities.scss
+@use "sass:color";
+@use "assets/mixins" as *;
+@use "assets/variables" as *;
 
 .mt-small {
     margin-top: $spacing-small;

@@ -46,7 +46,9 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/variables";
+@use "sass:color";
+@use "assets/mixins" as *;
+@use "assets/variables" as *;
 
 .todo-list__items {
     list-style-type: none;

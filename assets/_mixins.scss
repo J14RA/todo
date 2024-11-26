@@ -1,4 +1,6 @@
 // assets/scss/_mixins.scss
+@use "sass:color";
+@use "assets/variables" as *;
 
 // Media Query Mixin
 @mixin respond-to($breakpoint) {

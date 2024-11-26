@@ -1,8 +1,8 @@
 // assets/main.scss
-@import 'variables';
-@import 'mixins';
-@import 'reset';
-@import 'base';
-@import 'layout';
-@import 'components';
-@import 'utilities';
+@use 'variables';
+@use 'mixins';
+@use 'reset';
+@use 'base';
+@use 'layout';
+@use 'components';
+@use 'utilities';

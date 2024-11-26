@@ -1,4 +1,7 @@
 // assets/scss/_base.scss
+@use "sass:color";
+@use "assets/mixins" as *;
+@use "assets/variables" as *;
 
 body {
     font-size: $font-size-base;
