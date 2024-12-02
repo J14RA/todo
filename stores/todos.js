@@ -45,7 +45,7 @@ export const useTodoStore = defineStore("todoStore", {
       };
       try {
         const docRef = await addDoc(collection($db, "todos"), todo); // Ensure this matches your Firestore collection name
-        this.todos.push({ id: docRef.id, ...todo });
+        this.todos.unshift({ id: docRef.id, ...todo });
       } catch (error) {
         this.error = error.message;
       }

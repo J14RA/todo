@@ -11,12 +11,6 @@
                     <button @click="handleLogout" class="header__logout-cta button">Logout</button>
                 </div>
             </HideFromGuest>
-            <HideFromUser>
-                <div class="header__user">
-                    <NuxtLink to="/login" class="header__user-cta">Login</NuxtLink>
-                    <NuxtLink to="/signup" class="header__user-cta">Sign Up</NuxtLink>
-                </div>
-            </HideFromUser>
         </div>
     </header>
 </template>
@@ -53,22 +47,10 @@ const handleLogout = async () => {
         align-items: center;
     }
 
-    &__user,
     &__logout {
         display: flex;
         justify-content: flex-end;
         margin-top: 0; // Remove margin-top to align with the title
-    }
-
-    &__user-cta,
-    &__logout-cta {
-        color: $text-color;
-        text-decoration: none;
-        margin-right: 10px;
-
-        &:hover {
-            text-decoration: underline;
-        }
     }
 }
 </style>
