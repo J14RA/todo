@@ -3,11 +3,10 @@
         <transition-group name="todo" tag="ul" class="todo-list__items">
             <li v-for="todo in sortedTodos" :key="todo.id" class="todo-list__item">
                 <div class="todo-list__card">
-                    <input type="checkbox" @change="toggleCompletion(todo)"
-                        :checked="todo.completions.includes(today)" />
+                    <input type="checkbox" :checked="todo.completed" @change="toggleCompletion(todo)" />
                     <p>
-                        <span :class="{ 'line-through': todo.completions.includes(today) }">
-                            {{ todo.name }}
+                        <span :class="{ 'line-through': todo.completed }">
+                            {{ todo.text }} - <small>{{ todo.createdAt }}</small>
                         </span>
                     </p>
                     <button class="todo-list__cta" @click="deleteTodo(todo.id)">
@@ -20,46 +19,40 @@
 </template>
 
 <script setup>
-import { useTodoStore } from '~/stores/todos';
-import { format } from 'date-fns';
-import { computed, onMounted } from 'vue';
-
-const props = defineProps({
-    todos: Array,
-});
+import { computed, onMounted } from "vue";
+import { useTodoStore } from "~/stores/todos";
 
 const todoStore = useTodoStore();
 
-const today = format(new Date(), 'yyyy-MM-dd');
-
-// Sort todos based on completion status
-const sortedTodos = computed(() => {
-    return [
-        ...props.todos
-            .filter(todo => !todo.completions.includes(today)) // Unchecked items first
-            .sort((a, b) => b.createdAt - a.createdAt),        // Sort newest to oldest
-        ...props.todos
-            .filter(todo => todo.completions.includes(today))  // Checked items
-            .sort((a, b) => b.createdAt - a.createdAt)         // Sort newest to oldest
-    ];
+// Fetch todos on mount
+onMounted(async () => {
+    await todoStore.fetchTodos();
 });
 
-
+// Delete a todo
 const deleteTodo = async (id) => {
     await todoStore.deleteTodo(id);
 };
 
+// Toggle completion status
 const toggleCompletion = async (todo) => {
     await todoStore.toggleCompletion(todo);
 };
 
-onMounted(async () => {
-    await todoStore.fetchTodos();
+// Sort todos by completion status and creation time
+const sortedTodos = computed(() => {
+    return [
+        ...todoStore.todos
+            .filter((todo) => !todo.completed)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        ...todoStore.todos
+            .filter((todo) => todo.completed)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+    ];
 });
 </script>
-<style lang="scss" scoped>
-@use "sass:color";
 
+<style lang="scss" scoped>
 .todo-list__items {
     list-style-type: none;
     padding: 0;

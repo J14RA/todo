@@ -1,14 +1,13 @@
 import { defineStore } from "pinia";
-import { format } from "date-fns";
 import {
-  addDoc,
   collection,
+  addDoc,
   getDocs,
-  doc,
-  deleteDoc,
-  updateDoc,
   query,
   where,
+  deleteDoc,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
 
 export const useTodoStore = defineStore("todoStore", {
@@ -17,12 +16,13 @@ export const useTodoStore = defineStore("todoStore", {
     error: null,
   }),
   actions: {
+    // Fetch todos for the current user
     async fetchTodos() {
       this.error = null;
       const { $db, $auth } = useNuxtApp();
       try {
         const todosQuery = query(
-          collection($db, "todos"), // Ensure this matches your Firestore collection name
+          collection($db, "todos"),
           where("userId", "==", $auth.currentUser.uid)
         );
         const snapshot = await getDocs(todosQuery);
@@ -32,59 +32,58 @@ export const useTodoStore = defineStore("todoStore", {
         }));
       } catch (error) {
         this.error = error.message;
-        console.log(this.error);
+        console.error("Failed to fetch todos:", error);
       }
     },
-    async addTodo(name) {
+
+    // Add a new todo
+    async addTodo(text) {
       this.error = null;
       const { $db, $auth } = useNuxtApp();
       const todo = {
-        name,
-        completions: [],
+        text,
         userId: $auth.currentUser.uid,
+        createdAt: new Date().toISOString(), // Add creation timestamp
+        completed: false, // Add completed field
       };
       try {
-        const docRef = await addDoc(collection($db, "todos"), todo); // Ensure this matches your Firestore collection name
+        const docRef = await addDoc(collection($db, "todos"), todo);
         this.todos.unshift({ id: docRef.id, ...todo });
       } catch (error) {
         this.error = error.message;
+        console.error("Failed to add todo:", error);
       }
     },
-    async updateTodo(id, updates) {
+    async toggleCompletion(todo) {
       this.error = null;
       const { $db } = useNuxtApp();
       try {
-        const docRef = doc($db, "todos", id); // Ensure this matches your Firestore collection name
-        await updateDoc(docRef, updates);
-        const index = this.todos.findIndex((todo) => todo.id === id);
+        const docRef = doc($db, "todos", todo.id);
+        await updateDoc(docRef, { completed: !todo.completed });
+        const index = this.todos.findIndex((t) => t.id === todo.id);
         if (index !== -1) {
-          this.todos[index] = { ...this.todos[index], ...updates };
+          this.todos[index].completed = !todo.completed;
         }
       } catch (error) {
         this.error = error.message;
       }
     },
+
+    // Delete a todo by ID
     async deleteTodo(id) {
+      this.error = null;
       const { $db } = useNuxtApp();
       try {
-        const docRef = doc($db, "todos", id); // Ensure this matches your Firestore collection name
+        const docRef = doc($db, "todos", id);
         await deleteDoc(docRef);
         this.todos = this.todos.filter((todo) => todo.id !== id);
       } catch (error) {
         this.error = error.message;
+        console.error("Failed to delete todo:", error);
       }
     },
-    toggleCompletion(todo) {
-      const today = format(new Date(), "yyyy-MM-dd");
-      if (todo.completions.includes(today)) {
-        todo.completions = todo.completions.filter((date) => date !== today);
-      } else {
-        todo.completions.push(today);
-      }
-      this.updateTodo(todo.id, {
-        completions: todo.completions,
-      });
-    },
+
+    // Clear all todos (for UI reset purposes)
     resetTodos() {
       this.todos = [];
     },
