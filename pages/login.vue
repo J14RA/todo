@@ -1,6 +1,6 @@
 <template>
     <HideFromUser>
-        <div class="login">
+        <div class="login container">
             <div class="login-form">
                 <h2 class="login-title">Login</h2>
                 <form @submit.prevent="handleLogin">
@@ -57,6 +57,7 @@ definePageMeta({
     }
 
     &-form {
+        width: 30rem;
         background-color: #f9f9f9;
         padding: 20px;
         border-radius: 10px;

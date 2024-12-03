@@ -1,6 +1,6 @@
 <template>
     <HideFromUser>
-        <div class="signup">
+        <div class="signup container">
             <div class="signup-form">
                 <h2 class="signup-form__title">Sign up</h2>
                 <form @submit.prevent="handleSignup">
@@ -75,7 +75,7 @@ definePageMeta({
     height: 100vh;
 
     &-form {
-        width: 50%;
+        width: 30rem;
         background-color: #f9f9f9;
         padding: 20px;
         border-radius: 10px;

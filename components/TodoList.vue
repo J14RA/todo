@@ -1,15 +1,15 @@
 <template>
-    <div>
+    <div class="container">
         <transition-group name="todo" tag="ul" class="todo-list__items">
             <li v-for="todo in sortedTodos" :key="todo.id" class="todo-list__item">
-                <div class="todo-list__card">
+                <div class="todo-list__card card">
                     <input type="checkbox" :checked="todo.completed" @change="toggleCompletion(todo)" />
                     <p>
                         <span :class="{ 'line-through': todo.completed }">
                             {{ todo.text }} - <small>{{ todo.createdAt }}</small>
                         </span>
                     </p>
-                    <button class="todo-list__cta" @click="deleteTodo(todo.id)">
+                    <button class="todo-list__cta button" @click="deleteTodo(todo.id)">
                         Delete
                     </button>
                 </div>
@@ -67,14 +67,6 @@ const sortedTodos = computed(() => {
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: #f1f1f1;
-    }
 }
 
 .line-through {

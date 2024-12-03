@@ -1,8 +1,8 @@
 <template>
     <form @submit.prevent="handleSubmit" class="add-todo">
-        <h2 class="add-todo__title">What are you thinking?</h2>
-        <input v-model="name" type="text" placeholder="Enter a new to-do item..." class="add-todo__input" />
-        <button type="submit" class="add-todo__cta">Add to List</button>
+        <h1 class="add-todo__title">What are you thinking?</h1>
+        <input v-model="name" type="text" placeholder="What's on your mind?" class="add-todo__input" />
+        <button type="submit" :disabled="!name.trim()" class="add-todo__cta button">Add to List</button>
     </form>
 </template>
 
@@ -17,6 +17,9 @@ const handleSubmit = async () => {
     if (name.value.trim()) {
         await todoStore.addTodo(name.value);
         name.value = "";
+    } else {
+        alert("Please enter a todo before submitting.");
+        return;
     }
 };
 </script>
@@ -52,12 +55,15 @@ const handleSubmit = async () => {
         background-color: #3498db;
         color: #fff;
         border: none;
-        border-radius: 5px;
-        cursor: pointer;
         transition: background-color 0.3s ease;
 
         &:hover {
             background-color: #2980b9;
+        }
+
+        &:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
         }
     }
 }
