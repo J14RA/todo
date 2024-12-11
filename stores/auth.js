@@ -22,7 +22,6 @@ export const useAuthStore = defineStore("auth", {
       if ($auth) {
         onAuthStateChanged($auth, (user) => {
           this.user = user || null;
-          console.log("user state change:", this.user);
           this.initialAuthValueReady = true;
         });
       } else {
